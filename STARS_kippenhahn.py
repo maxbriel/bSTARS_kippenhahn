@@ -172,6 +172,18 @@ if __name__ == '__main__':
     # plot the main stellar properties
     plt.plot(model_numbers, total_mass, color='black', lw=2)
     
+    # bSTARS will return a zero value for the helium core mass
+    # if there's no envelope left.
+    he_core_mass = get_he_core_mass(df)
+    
+    # check where the helium core mass is zero
+    mask = np.where(he_core_mass > 0)[0]
+    if len(mask) > 0:
+        mask2 = np.where(he_core_mass[mask[-1]:] == 0)[0]
+        if len(mask2) > 0:
+            he_core_mass[mask[-1]+1:] = total_mass[mask[-1]+1:]
+        
+    
     # plot the helium core mass
     plt.plot(model_numbers, get_he_core_mass(df), color='#1f77b4', lw=2)
     # plot the carbon-oxygen core mass
