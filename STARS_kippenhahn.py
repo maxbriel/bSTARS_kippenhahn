@@ -28,7 +28,7 @@ def get_co_core_mass(df):
 
 def get_m_conv(df):
     '''Gets the mass coordinates of convective-radiative boundaries'''
-    return df.iloc[:,11:22].to_numpy()
+    return df.iloc[:,11:23].to_numpy()
 
 def get_conv_env_mass(df):
     '''Gets the mass of the convective envelope'''
@@ -96,7 +96,7 @@ if __name__ == '__main__':
         sczone_start = 0
         sczone_end = 0
         
-        sorted_by_mass = sorted_by_mass[np.abs(sorted_by_mass) < mass-0.0001]
+        sorted_by_mass = sorted_by_mass[np.abs(sorted_by_mass) < mass-0.01]
 
         if len(sorted_by_mass) > 0:
             if sorted_by_mass[0] < 0:
@@ -128,7 +128,7 @@ if __name__ == '__main__':
                     # find closest zone
                     exists = False
                     for z in zones:
-                        if np.isclose(z.y_min[-1], czone_start, atol=0.5) and np.isclose(z.y_max[-1], czone_end, atol=0.5) and (N - z.x[-1] < 100):
+                        if np.isclose(z.y_min[-1], czone_start, atol=0.5) and np.isclose(z.y_max[-1], czone_end, atol=0.5) and (N - z.x[-1] < 400):
                             z.append(N, czone_start, czone_end)
                             exists = True
                             break
@@ -155,7 +155,7 @@ if __name__ == '__main__':
                 czone_end = mass
             
                 for z in zones:
-                    if np.isclose(z.y_min[-1], czone_start, atol=0.5) and np.isclose(z.y_max[-1], czone_end, atol=0.5) and (N - z.x[-1] < 100):
+                    if np.isclose(z.y_min[-1], czone_start, atol=0.5) and np.isclose(z.y_max[-1], czone_end, atol=0.5) and (N - z.x[-1] < 400):
                         z.append(N, czone_start, czone_end)
                         exists = True
                         break
